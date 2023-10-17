@@ -1,4 +1,4 @@
-ï»¿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable:4996)
 #include <stdio.h>
 #include <stdlib.h>		// RAND_MAX
@@ -7,48 +7,48 @@
 #include <time.h>		//srand(time(NULL));
 #include <math.h>
 
-//ì„ ì–¸
+//¼±¾ğ
 long long Save_integer();
 long long exponential(long long);
 
-//ì „ì—­ ë³€ìˆ˜
+//Àü¿ª º¯¼ö
 long long int integer = 0;
-int savePM = 0; //1ì€ ì–‘ìˆ˜ 0ì€ ìŒìˆ˜
+int savePM = 0; //1Àº ¾ç¼ö 0Àº À½¼ö
 
-//ì‹¤í–‰
+//½ÇÇà
 int main(void) {
-	long long base = 0; 
+	long long base = 0;
 	while (1) {
 		base = exponential(Save_integer());
-		if (savePM == 0){
-			base = -base;
+		if (savePM == 0) {
+			base = -base; //´Ù½Ã À½¼ö·Î º¯È¯
 			printf("%lld\n", base);
 		}
 		else if (savePM == 1) {
 			printf("%lld\n", base);
 		}
 	}
-	
+
 	return 0;
 }
 
-//ì •ìˆ˜ë¥¼ ì…ë ¥ë°›ëŠ” í•¨ìˆ˜
+//Á¤¼ö¸¦ ÀÔ·Â¹Ş´Â ÇÔ¼ö
 long long Save_integer() {
 
-	printf("ì •ìˆ˜ë¥¼ ì…ë ¥í•˜ì‹œì˜¤ : ");
+	printf("Á¤¼ö¸¦ ÀÔ·ÂÇÏ½Ã¿À : ");
 	scanf("%lld", &integer);
 
-	//ìŒìˆ˜ë¼ë©´ ì¼ë‹¨ savePM ìŒìˆ˜ë¼ê³  ì €ì¥í•˜ê³  ì–‘ìˆ˜ë¡œ ë°”ê¿”ì¤€ë‹¤
+	//À½¼ö¶ó¸é ÀÏ´Ü savePM À½¼ö¶ó°í ÀúÀåÇÏ°í ¾ç¼ö·Î ¹Ù²ãÁØ´Ù
 	if (integer < 0) {
-		savePM = 0;			//ìŒìˆ˜ë¼ê³  ì €ì¥
-		return -integer;	//ì–‘ìˆ˜ë¡œ ë³€í™˜í›„ ë°˜í™˜
+		savePM = 0;			//À½¼ö¶ó°í ÀúÀå
+		return -integer;	//¾ç¼ö·Î º¯È¯ÈÄ ¹İÈ¯
 	}
-	//ì–‘ìˆ˜ë¼ë©´ ì¼ë‹¨ savePM ì–‘ìˆ˜ë¼ê³  ì €ì¥
-		savePM = 1;			//ì–‘ìˆ˜ë¼ê³  ì €ì¥
-		return integer;		//ì–‘ìˆ˜ê°’ ë°˜í™˜
+	//¾ç¼ö¶ó¸é ÀÏ´Ü savePM ¾ç¼ö¶ó°í ÀúÀå
+	savePM = 1;			//¾ç¼ö¶ó°í ÀúÀå
+	return integer;		//¾ç¼ö°ª ¹İÈ¯
 }
 
-//ì…ë ¥ë°›ì€ ì •ìˆ˜ë¥¼ ì„¸ì œê³±í•´ì„œ ë‚´ë¦¼ì°¨ìˆœìœ¼ë¡œ ë”í•˜ëŠ” ì¬ê·€ í•¨ìˆ˜
+//ÀÔ·Â¹ŞÀº Á¤¼ö¸¦ ¼¼Á¦°öÇØ¼­ ³»¸²Â÷¼øÀ¸·Î ´õÇÏ´Â Àç±Í ÇÔ¼ö
 long long exponential(long long integer) {
 	if (integer == 1) {
 		return 1;
