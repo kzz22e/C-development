@@ -7,21 +7,21 @@
 #include <time.h>		//srand(time(NULL));
 #include <math.h>
 
-//¼±¾ğ
+//ì„ ì–¸
 long long Save_integer();
 long long exponential(long long);
 
-//Àü¿ª º¯¼ö
+//ì „ì—­ ë³€ìˆ˜
 long long int integer = 0;
-int savePM = 0; //1Àº ¾ç¼ö 0Àº À½¼ö
+int savePM = 0; //1ì€ ì–‘ìˆ˜ 0ì€ ìŒìˆ˜
 
-//½ÇÇà
+//ì‹¤í–‰
 int main(void) {
 	long long base = 0;
 	while (1) {
 		base = exponential(Save_integer());
 		if (savePM == 0) {
-			base = -base; //´Ù½Ã À½¼ö·Î º¯È¯
+			base = -base; //ë‹¤ì‹œ ìŒìˆ˜ë¡œ ë³€í™˜
 			printf("%lld\n", base);
 		}
 		else if (savePM == 1) {
@@ -32,27 +32,26 @@ int main(void) {
 	return 0;
 }
 
-//Á¤¼ö¸¦ ÀÔ·Â¹Ş´Â ÇÔ¼ö
+//ì •ìˆ˜ë¥¼ ì…ë ¥ë°›ëŠ” í•¨ìˆ˜
 long long Save_integer() {
 
-	printf("Á¤¼ö¸¦ ÀÔ·ÂÇÏ½Ã¿À : ");
+	printf("ì •ìˆ˜ë¥¼ ì…ë ¥í•˜ì‹œì˜¤ : ");
 	scanf("%lld", &integer);
 
-	//À½¼ö¶ó¸é ÀÏ´Ü savePM À½¼ö¶ó°í ÀúÀåÇÏ°í ¾ç¼ö·Î ¹Ù²ãÁØ´Ù
+	//ìŒìˆ˜ë¼ë©´ savePM ìŒìˆ˜ë¼ê³  ì €ì¥í•˜ê³  ì–‘ìˆ˜ë¡œ ë°”ê¿”ì¤€ë‹¤
 	if (integer < 0) {
-		savePM = 0;			//À½¼ö¶ó°í ÀúÀå
-		return -integer;	//¾ç¼ö·Î º¯È¯ÈÄ ¹İÈ¯
+		savePM = 0;			//ìŒìˆ˜ë¼ê³  ì €ì¥
+		return -integer;	//ì–‘ìˆ˜ë¡œ ë³€í™˜í›„ ë°˜í™˜
 	}
-	//¾ç¼ö¶ó¸é ÀÏ´Ü savePM ¾ç¼ö¶ó°í ÀúÀå
-	savePM = 1;			//¾ç¼ö¶ó°í ÀúÀå
-	return integer;		//¾ç¼ö°ª ¹İÈ¯
+	//ì–‘ìˆ˜ë¼ë©´ savePM ì–‘ìˆ˜ë¼ê³  ì €ì¥
+	savePM = 1;			//ì–‘ìˆ˜ë¼ê³  ì €ì¥
+	return integer;		//ì–‘ìˆ˜ê°’ ë°˜í™˜
 }
 
-//ÀÔ·Â¹ŞÀº Á¤¼ö¸¦ ¼¼Á¦°öÇØ¼­ ³»¸²Â÷¼øÀ¸·Î ´õÇÏ´Â Àç±Í ÇÔ¼ö
+//ì…ë ¥ë°›ì€ ì •ìˆ˜ë¥¼ ì„¸ì œê³±í•´ì„œ ë‚´ë¦¼ì°¨ìˆœìœ¼ë¡œ ë”í•˜ëŠ” ì¬ê·€ í•¨ìˆ˜
 long long exponential(long long integer) {
 	if (integer == 1) {
 		return 1;
 	}
 	return pow(integer, 3) + exponential(integer - 1);
 }
-
