@@ -42,7 +42,7 @@ void show_digit(int x) {
 	printf("%d ", x % 10);
 }
 
-/* 실행과정
+/* 실행과정 int x = 326;
 4.	show_digit(326);
 3.		show_digit(32);
 2.			show_digit(3);
