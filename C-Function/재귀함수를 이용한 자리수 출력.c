@@ -48,9 +48,9 @@ void show_digit(int x) {
 2.			show_digit(3);
 1.				show_digit(0);
 1.				return;
-2.			printf("%d ", x % 10);
-3.		printf("%d ", x % 10);
-4.	printf("%d ", x % 10);
+2.			printf("%d ", 3 % 10);
+3.		printf("%d ", 32 % 10);
+4.	printf("%d ", 326 % 10);
 */
 
 //출력: 3 2 6
