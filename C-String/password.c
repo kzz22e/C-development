@@ -13,6 +13,7 @@ int main(void) {
     //입력받은 문자열을 저장하는 코드
     char password[SIZE] = { 0 };
 
+    //대문자,소문자,숫자 체크 여부 변수
     int check_lower, check_upper, check_digit;
     check_lower = check_upper = check_digit = 0;
     
