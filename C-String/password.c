@@ -30,12 +30,15 @@ int main(void) {
             }
         }
         for (int i = 0; i < strlen(password); i++) {
+            //소문자이면 1을 반환
             if (islower(password[i])){
                 check_lower = 1;
             }
+            //대문자면 1을 반환
             else if (isupper(password[i])){
                 check_upper = 1;
             }
+            //숫자이면 1을반환
             else if (isdigit(password[i])){
                 check_digit = 1;
             }
