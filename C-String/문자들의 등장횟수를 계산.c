@@ -1,43 +1,43 @@
-// ÇÊ¿äÇÑ Çì´õ ÆÄÀÏÀ» °¡Á®¿É´Ï´Ù.
-#define _CRT_SECURE_NO_WARNINGS // Microsoft Visual Studio¿Í °ü·ÃµÈ °æ°í¸¦ ¾ïÁ¦
-#pragma warning(disable:4996)  // Æ¯Á¤ °æ°í ¸Þ½ÃÁö¸¦ ¾ïÁ¦
-#include <stdio.h>             // Ç¥ÁØ ÀÔ·Â ¹× Ãâ·Â ÇÔ¼ö¸¦ »ç¿ëÇÏ±â À§ÇÑ Çì´õ
-#include <stdlib.h>            // Ç¥ÁØ ¶óÀÌºê·¯¸® ÇÔ¼ö ¹× »ó¼ö (¿¹: RAND_MAX) »ç¿ë
-#include <conio.h>             // ÄÜ¼Ö ÀÔÃâ·Â ÇÔ¼ö¸¦ »ç¿ëÇÏ±â À§ÇÑ Çì´õ (»ç¿ëµÇÁö ¾ÊÀ½)
-#include <Windows.h>           // À©µµ¿ìÁî API ÇÔ¼ö¸¦ »ç¿ëÇÏ±â À§ÇÑ Çì´õ (»ç¿ëµÇÁö ¾ÊÀ½)
-#include <time.h>              // ½Ã°£ ¹× ½Ã°è ÇÔ¼ö¸¦ »ç¿ëÇÏ±â À§ÇÑ Çì´õ (»ç¿ëµÇÁö ¾ÊÀ½)
-#include <math.h>              // ¼öÇÐ ÇÔ¼ö¸¦ »ç¿ëÇÏ±â À§ÇÑ Çì´õ (»ç¿ëµÇÁö ¾ÊÀ½)
+// í•„ìš”í•œ í—¤ë” íŒŒì¼ì„ ê°€ì ¸ì˜µë‹ˆë‹¤.
+#define _CRT_SECURE_NO_WARNINGS // Microsoft Visual Studioì™€ ê´€ë ¨ëœ ê²½ê³ ë¥¼ ì–µì œ
+#pragma warning(disable:4996)  // íŠ¹ì • ê²½ê³  ë©”ì‹œì§€ë¥¼ ì–µì œ
+#include <stdio.h>             // í‘œì¤€ ìž…ë ¥ ë° ì¶œë ¥ í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•œ í—¤ë”
+#include <stdlib.h>            // í‘œì¤€ ë¼ì´ë¸ŒëŸ¬ë¦¬ í•¨ìˆ˜ ë° ìƒìˆ˜ (ì˜ˆ: RAND_MAX) ì‚¬ìš©
+#include <conio.h>             // ì½˜ì†” ìž…ì¶œë ¥ í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•œ í—¤ë” (ì‚¬ìš©ë˜ì§€ ì•ŠìŒ)
+#include <Windows.h>           // ìœˆë„ìš°ì¦ˆ API í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•œ í—¤ë” (ì‚¬ìš©ë˜ì§€ ì•ŠìŒ)
+#include <time.h>              // ì‹œê°„ ë° ì‹œê³„ í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•œ í—¤ë” (ì‚¬ìš©ë˜ì§€ ì•ŠìŒ)
+#include <math.h>              // ìˆ˜í•™ í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•œ í—¤ë” (ì‚¬ìš©ë˜ì§€ ì•ŠìŒ)
 #include <string.h>  
 
 
 
 int main(void) {
 
-    //ÀÔ·Â¹ÞÀº ¹®ÀÚ¿­À» ÀúÀåÇÏ´Â ÄÚµå
+    //ìž…ë ¥ë°›ì€ ë¬¸ìžì—´ì„ ì €ìž¥í•˜ëŠ” ì½”ë“œ
     char s[100] = { 0 };
 
-    //¾Æ½ºÅ° ÄÚµåÀÇ ¹üÀ§¸¸Å­ ¹üÀ§ÁöÁ¤ 0~127
+    //ì•„ìŠ¤í‚¤ ì½”ë“œì˜ ë²”ìœ„ë§Œí¼ ë²”ìœ„ì§€ì • 0~127
     int freq[123] = { 0 };
 
-    printf("ÅØ½ºÆ®¸¦ ÀÔ·ÂÇÏ½Ã¿À: ");
-    gets_s(s, 99);
+    printf("í…ìŠ¤íŠ¸ë¥¼ ìž…ë ¥í•˜ì‹œì˜¤: ");
+    scanf("%[^\n]s", s);
 
-    //ÀÔ·Â¹ÞÀº ¹®ÀÚ¿­ÀÇ Å©±â¸¸Å­ ¹Ýº¹ : strlen(s) ÇÔ¼ö´Â ¹®ÀÚ¿­ sÀÇ ±æÀÌ¸¦ ¹ÝÈ¯ÇÕ´Ï´Ù.
-    //freq[s[i]]++; : ÀÔ·ÂµÈ ¹®ÀÚ¿­¿¡¼­ ¹®ÀÚ s[i]ÀÇ ºóµµ¼ö¸¦ Áõ°¡½ÃÅµ´Ï´Ù.Áï, 
-    //ÇØ´ç ¹®ÀÚ°¡ ³ªÅ¸³¯ ¶§¸¶´Ù freq ¹è¿­¿¡¼­ ÇØ´ç ¹®ÀÚÀÇ ASCII ÄÚµå À§Ä¡¿¡ ÀÖ´Â ¿ä¼Ò¸¦ 1¾¿ Áõ°¡½ÃÅµ´Ï´Ù.
+    //ìž…ë ¥ë°›ì€ ë¬¸ìžì—´ì˜ í¬ê¸°ë§Œí¼ ë°˜ë³µ : strlen(s) í•¨ìˆ˜ëŠ” ë¬¸ìžì—´ sì˜ ê¸¸ì´ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
+    //freq[s[i]]++; : ìž…ë ¥ëœ ë¬¸ìžì—´ì—ì„œ ë¬¸ìž s[i]ì˜ ë¹ˆë„ìˆ˜ë¥¼ ì¦ê°€ì‹œí‚µë‹ˆë‹¤.ì¦‰, 
+    //í•´ë‹¹ ë¬¸ìžê°€ ë‚˜íƒ€ë‚  ë•Œë§ˆë‹¤ freq ë°°ì—´ì—ì„œ í•´ë‹¹ ë¬¸ìžì˜ ASCII ì½”ë“œ ìœ„ì¹˜ì— ìžˆëŠ” ìš”ì†Œë¥¼ 1ì”© ì¦ê°€ì‹œí‚µë‹ˆë‹¤.
     for (int i = 0; i < strlen(s); i++) {
-        //¿¹:s[i] = 'k' ¶ó°í °¡Á¤ÇÏ¸é freq[K]++; -> freq[107]++ 
+        //ì˜ˆ:s[i] = 'k' ë¼ê³  ê°€ì •í•˜ë©´ freq[K]++; -> freq[107]++ 
         freq[s[i]]++;
     }
-    //if (freq[j] != 0): ¹®ÀÚ¿­¿¡ ÇØ´ç ¹®ÀÚ°¡ ÇÏ³ª ÀÌ»ó ³ªÅ¸³µ´Ù¸é ¾Æ·¡ÀÇ ÄÚµå¸¦ ½ÇÇà
+    //if (freq[j] != 0): ë¬¸ìžì—´ì— í•´ë‹¹ ë¬¸ìžê°€ í•˜ë‚˜ ì´ìƒ ë‚˜íƒ€ë‚¬ë‹¤ë©´ ì•„ëž˜ì˜ ì½”ë“œë¥¼ ì‹¤í–‰
     for (int j = 'a'; j <= 'z'; j++) {
         if (freq[j] != 0)
-            printf("%c ¹®ÀÚ°¡ %d¹ø µîÀåÇÏ¿´À½!\n", j, freq[j]);
+            printf("%c ë¬¸ìžê°€ %dë²ˆ ë“±ìž¥í•˜ì˜€ìŒ!\n", j, freq[j]);
     }
-    //if (freq[k] != 0): ¹®ÀÚ¿­¿¡ ÇØ´ç ¹®ÀÚ°¡ ÇÏ³ª ÀÌ»ó ³ªÅ¸³µ´Ù¸é ¾Æ·¡ÀÇ ÄÚµå¸¦ ½ÇÇà
+    //if (freq[k] != 0): ë¬¸ìžì—´ì— í•´ë‹¹ ë¬¸ìžê°€ í•˜ë‚˜ ì´ìƒ ë‚˜íƒ€ë‚¬ë‹¤ë©´ ì•„ëž˜ì˜ ì½”ë“œë¥¼ ì‹¤í–‰
     for (int k = 'A'; k <= 'Z'; k++) {
         if (freq[k] != 0)
-            printf("%c ¹®ÀÚ°¡ %d¹ø µîÀåÇÏ¿´À½!\n", k, freq[k]);
+            printf("%c ë¬¸ìžê°€ %dë²ˆ ë“±ìž¥í•˜ì˜€ìŒ!\n", k, freq[k]);
     }
 
     return 0;
