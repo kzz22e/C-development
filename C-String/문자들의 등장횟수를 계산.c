@@ -1,23 +1,22 @@
-// 필요한 헤더 파일을 가져옵니다.
 #define _CRT_SECURE_NO_WARNINGS // Microsoft Visual Studio와 관련된 경고를 억제
 #pragma warning(disable:4996)  // 특정 경고 메시지를 억제
 #include <stdio.h>             // 표준 입력 및 출력 함수를 사용하기 위한 헤더
 #include <stdlib.h>            // 표준 라이브러리 함수 및 상수 (예: RAND_MAX) 사용
-#include <conio.h>             // 콘솔 입출력 함수를 사용하기 위한 헤더 (사용되지 않음)
 #include <Windows.h>           // 윈도우즈 API 함수를 사용하기 위한 헤더 (사용되지 않음)
 #include <time.h>              // 시간 및 시계 함수를 사용하기 위한 헤더 (사용되지 않음)
 #include <math.h>              // 수학 함수를 사용하기 위한 헤더 (사용되지 않음)
 #include <string.h>  
-
-
+#define SIZE 100
+#define ASCII 128
 
 int main(void) {
 
     //입력받은 문자열을 저장하는 코드
-    char s[100] = { 0 };
+    char save[SIZE] = { 0 };
 
     //아스키 코드의 범위만큼 범위지정 0~127
-    int freq[123] = { 0 };
+    int freq[ASCII] = { 0 };
+    
 
     printf("텍스트를 입력하시오: ");
     //scanf()는 공백이 있으면 공백 앞자리까지 저장하기 때문에
