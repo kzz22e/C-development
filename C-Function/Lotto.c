@@ -16,6 +16,7 @@ int main() {
 
     // 중복 제거 (선택적)
     for (i = 0; i < 6; i++) {
+        lotto[i] = (rand() % 45) + 1; // 1부터 45까지의 난수 생성
         for (int j = 0; j < i; j++) {
             if (lotto[i] == lotto[j]) {
                 i--;
