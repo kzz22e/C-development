@@ -34,3 +34,32 @@ int main(void) {
 
 	return 0;
 }
+
+#include <stdio.h>
+#define SIZE 10
+
+// 배열의 요소를 출력하고 요소의 합을 반환하는 함수
+int get_array_sum(int* A, int size) {
+    int sum = 0;
+
+    printf("print_array()\n");
+
+    // 배열의 요소를 반복하며 출력하고 합을 계산
+    for (int i = 0; i < size; i++) {
+        printf("%d ", A[i]);
+        sum += A[i];
+    }
+
+    return sum;
+}
+
+int main(void) {
+    int data[SIZE] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+    int* a = data;
+
+    // get_array_sum 함수를 호출하여 배열의 요소를 출력하고 합을 얻음
+    int sum = get_array_sum(a, SIZE);
+    printf("\n배열 요소의 합=%d\n", sum);
+
+    return 0;
+}
