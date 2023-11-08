@@ -27,7 +27,8 @@ int main(void) {
 	int data[SIZE] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
 	int* a = data; // 포인터 a를 배열 data의 시작 주소로 초기화
 
-	print_array(a, 10); // 배열의 요소를 출력하는 함수 호출
+	// 배열 요소의 합을 계산하고 출력
+	print_array(a, 10);
 
 	printf("\n배열 요소의 합=%d\n", get_array_sum(a, 10)); // 배열 요소의 합을 계산하고 출력
 
