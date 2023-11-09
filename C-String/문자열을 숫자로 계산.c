@@ -1,11 +1,11 @@
-#pragma warning(disable:4996)  // Æ¯Á¤ °æ°í ¸Ş½ÃÁö¸¦ ¾ïÁ¦
+#pragma warning(disable:4996)  // íŠ¹ì • ê²½ê³  ë©”ì‹œì§€ë¥¼ ì–µì œ
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
-#define START_FROM_ONE 96 //´ë¹®ÀÚ
-#define UPPER 1 //´ë¹®ÀÚ
-#define LOWER 0 //¼Ò¹®ÀÚ
+#define START_FROM_ONE 96 //ëŒ€ë¬¸ì
+#define UPPER 1 //ëŒ€ë¬¸ì
+#define LOWER 0 //ì†Œë¬¸ì
 #define SIZE 30
 
 int Check_Capital_Word(char word[]) {
@@ -29,16 +29,15 @@ int SUM_Word(char word[]) {
 int main(void) {
     char word[SIZE] = { 0 };
 
-
     while (1) {
-        printf("¹®ÀÚ¿­À» ÀÔ·ÂÇÏ½Ã¿À :");
+        printf("ë¬¸ìì—´ì„ ì…ë ¥í•˜ì‹œì˜¤ :");
         scanf("%[^\n]s", word);
-        //¹®ÀÚ°¡ ÀüºÎ¼Ò¹®ÀÚ°¡ ¾Æ´Ï¶ó¸é ´Ù½Ã ¹İº¹
+        //ë¬¸ìê°€ ì „ë¶€ì†Œë¬¸ìê°€ ì•„ë‹ˆë¼ë©´ ë‹¤ì‹œ ë°˜ë³µ
         if (Check_Capital_Word(word) == LOWER) {
             break;
         }
-        printf("! ¼Ò¹®ÀÚ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä !\n");
+        printf("! ì†Œë¬¸ìë¡œ ì…ë ¥í•´ì£¼ì„¸ìš” !\n");
     }
-    printf("¹®ÀÚ¿¡ ÇÒ´çµÈ ¼ıÀÚÀÇ ÇÕ:%d", SUM_Word(word));
+    printf("ë¬¸ìì— í• ë‹¹ëœ ìˆ«ìì˜ í•©:%d", SUM_Word(word));
     return 0;
 }
