@@ -11,12 +11,12 @@ struct Inventory_Management {
     unsigned long ITEM_price;
     unsigned int ITEM_quantity;
 };
-
+//재고를 저장하는 함수
 void Save_Inventory_Management(struct Inventory_Management Y_STORE[]) {
     for (int i = 0; i < ITEM_SIZE; i++) {
         printf("제품명을 입력하세요: ");
         scanf("%29[^\n]", Y_STORE[i].ITEM_name);
-
+        
         printf("제품 가격을 입력하세요: ");
         scanf("%lu", &Y_STORE[i].ITEM_price);
 
@@ -25,6 +25,7 @@ void Save_Inventory_Management(struct Inventory_Management Y_STORE[]) {
     }
 }
 
+//재고를 출력하는 함수
 void Print_Inventory_Management(const struct Inventory_Management Y_STORE[]) {
     for (int i = 0; i < ITEM_SIZE; i++) {
         printf("제품명: %s\n", Y_STORE[i].ITEM_name);
@@ -32,7 +33,12 @@ void Print_Inventory_Management(const struct Inventory_Management Y_STORE[]) {
         printf("제품 수량: %u\n\n", Y_STORE[i].ITEM_quantity);
     }
 }
+//입력받은 값이 한글인지 확인
+int Check_ITEM_name(){
+    
+}
 
+//프로그램 시작
 int main() {
     struct Inventory_Management Y_STORE[ITEM_LIST];
 
