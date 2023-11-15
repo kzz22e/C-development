@@ -26,6 +26,7 @@ void Print_Inventory_Management(struct Inventory_Management Y_STORE[]); //재고
 
 //검사하는 함수
 int Check_ITEM_name(char* str); 
+int compareStructs(const void* a, const void* b);
 
 //저장하는 함수
 void SAVE_ITEM_name(char* question, char* Input_value, int (*function)(char*), char* errorMessage);
@@ -81,13 +82,13 @@ void Inventory_Status(struct Inventory_Management Y_STORE[]){
             break;
         }
     }
-    if (sub_menu = FIRST) {
+    if (sub_menu == FIRST) {
         qsort(Y_STORE, ITEM_LIST, sizeof(struct Inventory_Management), compareStructs);
     }
-    else if (sub_menu = SECOND) {
+    else if (sub_menu == SECOND) {
 
     }
-    else if (sub_menu = THIRD) {
+    else if (sub_menu == THIRD) {
 
     }   
 }
