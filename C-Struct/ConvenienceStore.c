@@ -9,23 +9,23 @@
 #define ITEM_SIZE 10
 #define ITEM_LIST 10
 
-//메뉴 상수선언
-#define FIRST 49    //1
-#define SECOND 50    //2
-#define THIRD 51    //3
-#define FOURTH 52    //4
+//메뉴 번호 상수선언
+#define FIRST 49        //1
+#define SECOND 50       //2
+#define THIRD 51        //3
+#define FOURTH 52       //4
 
 //================================================================================
 // 매뉴를 함수로 표현
 void Main_Menu();        //메인메뉴
-void Inventory_Status(struct Inventory_Management Y_STORE[]); //1.재고현황
+void Inventory_Status(struct Inventory_Management Y_STORE[]); //1.재고현황 메뉴
 
 //텍스트를 간단하게 출력하는 함수
-void Text_Print_list(char Text_list[]);
-void Print_Inventory_Management(struct Inventory_Management Y_STORE[]);
+void Text_Print_list(char Text_list[]); //텍스트 모음
+void Print_Inventory_Management(struct Inventory_Management Y_STORE[]); //재고 출력
 
 //검사하는 함수
-int Check_ITEM_name(char* str);
+int Check_ITEM_name(char* str); 
 
 //저장하는 함수
 void SAVE_ITEM_name(char* question, char* Input_value, int (*function)(char*), char* errorMessage);
