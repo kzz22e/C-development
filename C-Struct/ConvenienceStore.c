@@ -35,7 +35,6 @@ void Print_Inventory_Management(const struct Inventory_Management Y_STORE[]) {
 }
 //입력받은 값이 한글인지 확인
 int Check_ITEM_name(){
-    
 }
 
 //프로그램 시작
