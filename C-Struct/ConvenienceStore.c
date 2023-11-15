@@ -82,7 +82,7 @@ void Inventory_Status(struct Inventory_Management Y_STORE[]){
         }
     }
     if (sub_menu = FIRST) {
-
+        qsort(Y_STORE, ITEM_LIST, sizeof(struct Inventory_Management), compareStructs);
     }
     else if (sub_menu = SECOND) {
 
@@ -90,6 +90,10 @@ void Inventory_Status(struct Inventory_Management Y_STORE[]){
     else if (sub_menu = THIRD) {
 
     }   
+}
+//구조체를 비교하는 함수
+int compareStructs(const void* a, const void* b) {
+    return strcmp(((struct Inventory_Management*)a)->ITEM_name, ((struct Inventory_Management*)b)->ITEM_name);
 }
 
 //텍스트 출력 리스트 저장
