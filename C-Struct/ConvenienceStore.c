@@ -20,10 +20,13 @@ int main(){
     
     //Y_STORE이라는 구조체 배열 선언
     struct Inventory_Management Y_STORE[ITEM_LIST];
+    struct Inventory_Management* p = &Y_STORE;
     
     
     
 }
+
+void Save_Inventory_Management()
 
 
 
