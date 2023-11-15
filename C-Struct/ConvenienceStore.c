@@ -22,11 +22,21 @@ int main(){
     struct Inventory_Management Y_STORE[ITEM_LIST];
     struct Inventory_Management* p = &Y_STORE;
     
+    Save_Inventory_Management(&Y_STORE);
     
     
 }
 
-void Save_Inventory_Management()
+void Save_Inventory_Management(struct Inventory_Management* Y_STORE[]){
+    printf("");
+    scanf("");
+    
+    printf("");
+    scanf("");
+    
+    printf("");
+    scanf("");
+}
 
 
 
