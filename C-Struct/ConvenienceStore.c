@@ -49,3 +49,42 @@ int main() {
 
     return 0;
 }
+
+// 한글 여부를 확인하는 함수 
+int isKorean(unsigned int codepoint) {
+    //유니코드 한글 코드표 참조
+    //https://namu.wiki/w/현대%20한글의%20모든%20글자/유니코드
+    return (codepoint >= 0xAC00 && codepoint <= 0xD7A3);
+}
+
+#include <stdio.h>
+#include <string.h>
+
+// 한글 여부를 확인하는 함수
+int isKorean(const char* str) {
+    unsigned char firstByte = (unsigned char)str[0];
+
+    // 한글은 UTF-8에서 3바이트로 인코딩되므로 첫 번째 바이트의 패턴을 확인
+    if ((firstByte & 0xE0) == 0xE0) {
+        // 두 번째 바이트의 패턴도 확인
+        if ((str[1] & 0xC0) == 0x80 && (str[2] & 0xC0) == 0x80) {
+            return 1;  // UTF-8로 인코딩된 한글
+        }
+    }
+
+    return 0;  // 한글이 아닌 경우
+}
+
+// 문자열에 포함된 모든 문자가 한글인지 확인하는 함수
+int allCharactersKorean(const char* str) {
+    while (*str) {
+        if (!isKorean(str)) {
+            return 0;  // 한 글자라도 한글이 아니면 0을 반환
+        }
+
+        // 다음 문자로 이동
+        str += ((*str & 0xE0) == 0xE0) ? 3 : 1;
+    }
+
+    return 1;  // 문자열의 모든 문자가 한글이면 1을 반환
+}
