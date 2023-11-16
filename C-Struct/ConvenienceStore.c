@@ -116,12 +116,13 @@ int Inventory_Status(struct Inventory_Management Y_STORE[]){
     while (1) {
         Print_Menu("재고 현황");
         sub_menu = _getch();
-        if ((sub_menu < FIRST || sub_menu > FOURTH)) {
-            Print_Errer("없는 메뉴입니다.");
+        if (sub_menu >= FIRST && sub_menu <= FOURTH) {
             break;
         }
+        else {
+            Print_Errer("없는 메뉴입니다.");
+        }
     }
-    printf("\n%d", sub_menu);
     if (sub_menu == FIRST) {
         //qsort함수는 오름차순 정렬기준
         qsort(Y_STORE, ITEM_LIST, sizeof(struct Inventory_Management), compareStructs_name);
@@ -141,9 +142,6 @@ int Inventory_Status(struct Inventory_Management Y_STORE[]){
     }
     else if (sub_menu == FOURTH) {
         return 4;
-    }
-    else {
-        Print_Errer("없는 메뉴입니다.");
     }
 }
 
