@@ -18,15 +18,18 @@
 //================================================================================
 // 매뉴를 함수로 표현
 void Main_Menu();        //메인메뉴
-void Inventory_Status(struct Inventory_Management Y_STORE[]); //1.재고현황 메뉴
+int Inventory_Status(struct Inventory_Management Y_STORE[]); //1.재고현황 메뉴
 
 //텍스트를 간단하게 출력하는 함수
-void Text_Print_list(char Text_list[]); //텍스트 모음
+void Print_Simple(char Text_list[]);    //간단하게 사용가능한 텍스트
+void Print_Errer(char Text_list[]);     //에러 텍스트 모음
+void Print_Menu(char Text_list[]);      // 메뉴 텍스트 모음
 void Print_Inventory_Management(struct Inventory_Management Y_STORE[]); //재고 출력
 
 //검사하는 함수
-int Check_ITEM_name(char* str); 
-int compareStructs(const void* a, const void* b);
+int Check_ITEM_name(char* str);                             //제품이름을 검사하는 함수
+int compareStructs(const void* a, const void* b);           //구조체에서 ITEM_name을 비교하는 함수
+int compareStructsByPrice(const void* a, const void* b);    //구조체에서 ITEM_price을 비교하는 함수
 
 //저장하는 함수
 void SAVE_ITEM_name(char* question, char* Input_value, int (*function)(char*), char* errorMessage);
@@ -35,80 +38,123 @@ void Save_Inventory_Management(struct Inventory_Management Y_STORE[]);
 //================================================================================
 
 //구조체 선언
-struct Inventory_Management {
+typedef struct Inventory_Management {
     char ITEM_name[NAME_SIZE];
     long ITEM_price;
     long ITEM_quantity;
-};
+}Inventory_Management;
+
+//구조체에서 ITEM_name을 비교하는 함수
+int compareStructs_name(const void* a, const void* b) {
+    // a와 b를 각각 구조체 포인터로 캐스팅한 후, ITEM_name를 비교하여 반환
+    //(struct Inventory_Management*) 구조체 포인터로 형변환
+    return strcmp(((struct Inventory_Management*)a)->ITEM_name, ((struct Inventory_Management*)b)->ITEM_name);
+}
+//구조체에서 ITEM_price을 비교하는 함수
+int compareStructs_price(const void* a, const void* b) {
+    // a와 b를 각각 구조체 포인터로 캐스팅한 후, ITEM_price를 비교하여 반환
+    //(struct Inventory_Management*) 구조체 포인터로 형변환
+    return ((struct Inventory_Management*)a)->ITEM_price - ((struct Inventory_Management*)b)->ITEM_price;
+}
+//구조체에서 ITEM_quantity을 비교하는 함수
+int compareStructs_quantity(const void* a, const void* b) {
+    // a와 b를 각각 구조체 포인터로 캐스팅한 후, ITEM_quantity를 비교하여 반환
+    //(struct Inventory_Management*) 구조체 포인터로 형변환
+    return ((struct Inventory_Management*)a)->ITEM_quantity - ((struct Inventory_Management*)b)->ITEM_quantity;
+}
+
 
 //프로그램 시작
 int main() {
-    struct Inventory_Management Y_STORE[ITEM_LIST];
+    Inventory_Management Y_STORE[ITEM_LIST] = {
+        {"apple", 12345, 13},
+        {"orange", 67890, 8},
+        {"banana", 54321, 20},
+        {"grape", 98765, 15},
+        {"watermelon", 24680, 5},
+        {"strawberry", 13579, 25},
+        {"kiwi", 11223, 18},
+        {"pineapple", 33445, 10},
+        {"mango", 55667, 22},
+        {"pear", 77889, 17}
+    };
 
-    // Save_Inventory_Management 함수를 호출하여 데이터를 입력합니다.
-    Save_Inventory_Management(Y_STORE);
+    //Save_Inventory_Management(Y_STORE);
 
     Main_Menu(Y_STORE);
 
     return 0;
 }
 
+//메인메뉴
 void Main_Menu(struct Inventory_Management Y_STORE[]) {
     short menu = 0,sub_menu = 0;
     while(1){
         while(1){
-            Text_Print_list("메인메뉴");
+            Print_Menu("메인 메뉴");
             menu = _getch();
                 if ((menu >= FIRST && menu <= FOURTH)) {
                     break;
                 }
-                Text_Print_list("없는 메뉴입니다.");
+                Print_Errer("없는 메뉴입니다.");
         }
-        if (menu == FIRST) {
-            Inventory_Status(Y_STORE);
+        //1. 재고 현황
+        while(1){
+            if (menu == FIRST) {
+                if (Inventory_Status(Y_STORE) == 4) { break; }
+            }
         }
     }
 }
-//재고 현황 메뉴
-void Inventory_Status(struct Inventory_Management Y_STORE[]){
 
-    int i;
+//재고 현황 메뉴
+int Inventory_Status(struct Inventory_Management Y_STORE[]){
+
+    int i = 0;
     short sub_menu = 0;
     
     while (1) {
-        Text_Print_list("재고 현황");
+        Print_Menu("재고 현황");
         sub_menu = _getch();
-        if ((sub_menu >= FIRST && sub_menu <= THIRD)) {
+        if ((sub_menu < FIRST || sub_menu > FOURTH)) {
+            Print_Errer("없는 메뉴입니다.");
             break;
         }
     }
+    printf("\n%d", sub_menu);
     if (sub_menu == FIRST) {
-        qsort(Y_STORE, ITEM_LIST, sizeof(struct Inventory_Management), compareStructs);
+        //qsort함수는 오름차순 정렬기준
+        qsort(Y_STORE, ITEM_LIST, sizeof(struct Inventory_Management), compareStructs_name);
+        Print_Inventory_Management(Y_STORE);
+        return 1;
     }
     else if (sub_menu == SECOND) {
-
+        //qsort함수는 오름차순 정렬기준
+        qsort(Y_STORE, ITEM_LIST, sizeof(struct Inventory_Management), compareStructs_price);
+        Print_Inventory_Management(Y_STORE);
+        return 2;
     }
     else if (sub_menu == THIRD) {
-
-    }   
-}
-//구조체를 비교하는 함수
-int compareStructs(const void* a, const void* b) {
-    return strcmp(((struct Inventory_Management*)a)->ITEM_name, ((struct Inventory_Management*)b)->ITEM_name);
-}
-
-//텍스트 출력 리스트 저장
-void Text_Print_list(char Text_list[]) {
-
-    //안내선 출력
-    if (strcmp(Text_list, "안내선") == 0) {
-        printf("____________________________________________\n\n");
-        return;
+        qsort(Y_STORE, ITEM_LIST, sizeof(struct Inventory_Management), compareStructs_quantity);
+        Print_Inventory_Management(Y_STORE);
+        return 3;
     }
-    //메인메뉴 출력
-    if (strcmp(Text_list, "메인메뉴") == 0) {
+    else if (sub_menu == FOURTH) {
+        return 4;
+    }
+    else {
+        Print_Errer("없는 메뉴입니다.");
+    }
+}
+
+
+//메뉴 출력 함수
+void Print_Menu(char Text_list[]) {
+    
+    //메인메뉴
+    if (strcmp(Text_list, "메인 메뉴") == 0) {
         printf("____________________________________________\n");
-        printf("[메인메뉴]\n");
+        printf("[메인 메뉴]\n");
         printf("1. 재고 현황\n");
         printf("2. 재고 검색\n");
         printf("3. 재고 관리\n");
@@ -116,17 +162,20 @@ void Text_Print_list(char Text_list[]) {
         printf("____________________________________________\n");
         return;
     }
-    //1. 재고 현황 메뉴 출력
-    if (strcmp(Text_list, "재고 현황") == 0) {
+    //1. 재고 현황 메뉴
+    else if (strcmp(Text_list, "재고 현황") == 0) {
         printf("____________________________________________\n");
         printf("[정렬방식 선택]\n");
         printf("1. 제품 알파벳순 정렬\n");
         printf("2. 제품 가격순 정렬\n");
         printf("3. 제품 수량순 정렬\n");
+        printf("4. 메인 메뉴\n");
         printf("____________________________________________\n");
         return;
     }
-    //경고 문자 출력
+}
+//에러메시지 출력 함수
+void Print_Errer(char Text_list[]) {
     printf("\n\n\n\n\n____________________경고____________________\n");
 
     if (strcmp(Text_list, "영어, 숫자만 입력 가능합니다.") == 0) {
@@ -140,9 +189,17 @@ void Text_Print_list(char Text_list[]) {
         printf("\n\n없는 메뉴입니다. 다시입력해주세요\n");
     }
     printf("\n____________________________________________\n\n\n\n\n\n");
-
-    
 }
+//간단텍스트 출력 함수
+void Print_Simple(char Text_list[]) {
+    if (strcmp(Text_list, "안내선") == 0) {
+        printf("____________________________________________\n\n");
+        return;
+    }
+}
+
+
+
 
 //영어 알파벳, 숫자 여부를 확인하는 함수
 int Check_ITEM_name(char* str) {
@@ -172,7 +229,7 @@ void SAVE_ITEM_name(char* question, char* Input_value, int (*function)(char*), c
             break;
         }
 
-        Text_Print_list(errorMessage);
+        Print_Errer(errorMessage);
     }
 }
 
@@ -184,7 +241,7 @@ void SAVE_ITEM_priceORquantity(char* question, long* Input_value, char* errorMes
             getchar(); // Enter 키 제거
             break;
         }
-        Text_Print_list(errorMessage);
+        Print_Errer(errorMessage);
         getchar(); // 입력 버퍼 비우기
     }
 }
@@ -193,7 +250,7 @@ void SAVE_ITEM_priceORquantity(char* question, long* Input_value, char* errorMes
 void Save_Inventory_Management(struct Inventory_Management Y_STORE[]) {
     for (int i = 0; i < ITEM_SIZE; i++) {
 
-        Text_Print_list("안내선");
+        Print_Simple("안내선");
 
         // 입력받기 함수 호출
         SAVE_ITEM_name("제품명을 입력하세요: ", Y_STORE[i].ITEM_name, Check_ITEM_name, "영어, 숫자만 입력 가능합니다.");
@@ -204,7 +261,7 @@ void Save_Inventory_Management(struct Inventory_Management Y_STORE[]) {
         // 수량 입력받기
         SAVE_ITEM_priceORquantity("제품 수량을 입력하세요: ", &Y_STORE[i].ITEM_quantity, "양의 숫자를 입력하세요.");
 
-        Text_Print_list("안내선");
+        Print_Simple("안내선");
     }
 }
 
