@@ -1,4 +1,4 @@
 ﻿  C-Compile.c
-C:\Users\admin\source\repos\C-development\C-Compile\C-Compile.c(56,13): warning C4244: '함수': '__int64'에서 'double'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\admin\source\repos\C-development\C-Compile\C-Compile.c(56,25): warning C4244: 'return': 'double'에서 '__int64'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\admin\source\repos\C-development\C-Compile\C-Compile.c(95,20): warning C4013: '_getch'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\admin\source\repos\C-development\C-Compile\C-Compile.c(146): warning C4715: 'Inventory_Status': 모든 제어 경로에서 값을 반환하지는 않습니다.
   C-Compile.vcxproj -> C:\Users\admin\source\repos\C-development\C-Compile\x64\Debug\C-compiler.exe

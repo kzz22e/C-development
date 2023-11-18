@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\C-Compile",
+    "\\C-String",
+    "\\C-Struct"
   ],
-  "SelectedNode": "\\C-Compile.sln",
+  "SelectedNode": "\\C-Compile\\C-Compile.sln",
   "PreviewInSolutionExplorer": false
 }
