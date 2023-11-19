@@ -1,20 +1,14 @@
 #define _CRT_SECURE_NO_WARNINGS
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include <stdlib.h>
+#include <windows.h>
 
 //상수 선언
 #define NAME_SIZE 30
 #define ITEM_SIZE 10
-#define ITEM_LIST 10
-
-//메뉴 번호
-#define FIRST 1         //1
-#define SECOND 2        //2
-#define THIRD 3         //3
-#define FOURTH 4        //4
-#define FIFTH 5         //5
+#define ITEM_LIST 10    
 
 //새로운 자료형으로 구조체 선언
 typedef struct Inventory_Management {
@@ -23,42 +17,51 @@ typedef struct Inventory_Management {
     long ITEM_quantity;
 }Inventory_Management;
 
+//열거형으로 메뉴 번호 설정
+enum Menu_Options {
+    FIRST = 1,
+    SECOND,
+    THIRD,
+    FOURTH,
+    FIFTH
+};
+
 //================================================================================
  
 // 매뉴를 함수로 표현
-int Menu_Main();                                                                        //메인메뉴
-int Menu_Inventory_Status(Inventory_Management Y_STORE[]);                       //1.재고현황 메뉴
-int Menu_Inventory(Inventory_Management Y_STORE[]);                              //2.재고 관리 메뉴
-int Menu_Inventory_Search(Inventory_Management Y_STORE[]);                       //2-1.재고 검색 메뉴
-int Menu_Inventory_Add(Inventory_Management Y_STORE[]);                          //2-2.재고 입고 메뉴
-int Menu_Inventory_Take(Inventory_Management Y_STORE[]);                         //2-3.재고 출고 메뉴
-int Menu_Inventory_Delete(Inventory_Management Y_STORE[]);                       //2-4.재고 삭제 메뉴    
+int Menu_Main();                                                                 //메인메뉴
+int Menu_Inventory_Status(Inventory_Management* Y_STORE);                       //1.재고현황 메뉴
+int Menu_Inventory(Inventory_Management* Y_STORE);                              //2.재고 관리 메뉴
+int Menu_Inventory_Search(Inventory_Management* Y_STORE);                       //2-1.재고 검색 메뉴
+int Menu_Inventory_Add(Inventory_Management* Y_STORE);                          //2-2.재고 입고 메뉴
+int Menu_Inventory_Take(Inventory_Management* Y_STORE);                         //2-3.재고 출고 메뉴
+int Menu_Inventory_Delete(Inventory_Management* Y_STORE);                       //2-4.재고 삭제 메뉴    
 
 //텍스트를 간단하게 출력하는 함수
-void Print_Simple(char Text_list[]);                                                    //자주 사용하는 출력문
-void Print_Errer(char Text_list[]);                                                     //에러 출력문 모음
 void Print_Menu(char Text_list[]);                                                      //메뉴 출력문 모음
-void Print_Inventory_Management(Inventory_Management Y_STORE[], int sortType);   //모든 재고 출력
-void Print_Count_Inventory(Inventory_Management* Y_STORE, int repeat);           //재고 번호 별 출력
+void Print_Errer(char Text_list[]);                                                     //에러 출력문 모음
+void Print_Simple(char Text_list[]);                                                    //자주 사용하는 출력문
+void Print_Inventory_Management(Inventory_Management* Y_STORE, int sortType);          //모든 재고 출력
+void Print_Count_Inventory(Inventory_Management* Y_STORE, int repeat);                  //특정 재고 출력
 
 //검사하는 함수
-int Check_ITEM_name(char* str);                                                         //재고 이름 허용성 검사
-int compareStructs_name(const void* a, const void* b);                                  //[상품이름순]
-int compareStructs_price(const void* a, const void* b);                                 //[상품가격순]
-int compareStructs_quantity(const void* a, const void* b);                              //[상품수량순]
-int Check_Inventory_LIST(Inventory_Management Y_STORE[], char checkITEM_name[], int Value);              //재고 유무 여부 채크 함수
+int Check_ITEM_name(char* str);                                                                     //재고 이름 허용성 검사
+int Check_Inventory_LIST(Inventory_Management* Y_STORE, char checkITEM_name[], int Value);         //재고 유무 여부 체크 함수
+int compareStructs_name(const void* a, const void* b);                                              //[상품이름순]
+int compareStructs_price(const void* a, const void* b);                                             //[상품가격순]
+int compareStructs_quantity(const void* a, const void* b);                                          //[상품수량순]
 
 //저장하는 함수
-void SAVE_ITEM_priceORquantity(char* question, long* Input_value, char* errorMessage);                          //가격과 수량을 입력받아 유효한지 확인까지 수행하는 함수
-void ADD_ITEM_quantity(char* question, Inventory_Management* Y_STORE, char* errorMessage, int index);    //추가 수량 입력받는 함수
-void TAKE_ITEM_quantity(char* question, Inventory_Management* Y_STORE, char* errorMessage, int index);   //출고 수량 입력받는 함수
-int DELETE_Inventory(Inventory_Management* Y_STORE, char* errorMessage, char ITEM_name[]);               //재고를 삭제하는 함수
-int GetValid_ITEM_Name(char itemname[]);                                                                       //재고의 이릅을 입력받아 저장하는 함수
+int GetValid_ITEM_Name(char itemname[]);                                                                        //재고의 이름을 입력받아 저장하는 함수
+void SAVE_ITEM_priceORquantity(char* question, long* Input_value, char* errorMessage);                          //가격과,수량 받아 검사하는 함수
+void ADD_ITEM_quantity(char* question, Inventory_Management* Y_STORE, char* errorMessage, int index);           //입고 수량 입력받는 함수
+void TAKE_ITEM_quantity(char* question, Inventory_Management* Y_STORE, char* errorMessage, int index);          //출고 수량 입력받는 함수
+int DELETE_Inventory(Inventory_Management* Y_STORE, char* errorMessage, char ITEM_name[]);                      //재고를 삭제하는 함수
 
 //================================================================================
 
 
-//프로그램 시작
+//프로그램 시작 함수
 int main() {
     Inventory_Management Y_STORE[ITEM_LIST] = {
         {"apple", 12345, 13},
@@ -78,15 +81,17 @@ int main() {
     return 0;
 }
 
+
 //메뉴 관련 함수------------------------------------------------------------------------------------------------------
 
+
 //메인메뉴
-int Menu_Main(Inventory_Management Y_STORE[]) {
-    short menu = 0;
+int Menu_Main(Inventory_Management* Y_STORE) {
+    enum Menu_Options menu = 0;
     while(1){
         while(1){
             Print_Menu("메인 메뉴");
-            scanf("%hd", &menu);
+            scanf("%d", &menu);
                 if ((menu >= FIRST && menu <= FOURTH)) {
                     break;
                 }
@@ -105,17 +110,19 @@ int Menu_Main(Inventory_Management Y_STORE[]) {
             return 0;
         }
     }
+    system("cls");
 }
 
 //1. 재고 현황 메뉴
-int Menu_Inventory_Status(Inventory_Management Y_STORE[]){
+int Menu_Inventory_Status(Inventory_Management* Y_STORE){
+    
+    enum Menu_Options sub_menu = 0;
 
     int i = 0;
-    short sub_menu = 0;
     
     while (1) {
         Print_Menu("재고 현황");
-        scanf("%hd", &sub_menu);
+        scanf("%d", &sub_menu);
 
         if (sub_menu >= FIRST && sub_menu <= FOURTH) {
             break;
@@ -124,6 +131,7 @@ int Menu_Inventory_Status(Inventory_Management Y_STORE[]){
             Print_Errer("없는 메뉴입니다.");
         }
     }
+    system("cls");
     if (sub_menu == FIRST) {
         //qsort함수는 오름차순 정렬기준 [이름순]
         qsort(Y_STORE, ITEM_LIST, sizeof(struct Inventory_Management), compareStructs_name);
@@ -152,14 +160,14 @@ int Menu_Inventory_Status(Inventory_Management Y_STORE[]){
 }
 
 //2. 재고 관리 메뉴
-int Menu_Inventory(Inventory_Management Y_STORE[]) {
+int Menu_Inventory(Inventory_Management* Y_STORE) {
 
+    enum Menu_Options sub_menu = 0;
+    
     int i = 0;
-    short sub_menu = 0;
-
-    while (1) {
+    while(1){
         Print_Menu("재고 관리");
-        scanf("%hd", &sub_menu);
+        scanf("%d", &sub_menu);
         if (sub_menu >= FIRST && sub_menu <= FIFTH) {
             break;
         }
@@ -167,6 +175,7 @@ int Menu_Inventory(Inventory_Management Y_STORE[]) {
             Print_Errer("없는 메뉴입니다.");
         }
     }
+    system("cls");
     //1. 재고 검색
     if (sub_menu == FIRST) {
         while (1) { while (getchar() != '\n'); if (Menu_Inventory_Search(Y_STORE) == 1) { break; } };
@@ -198,8 +207,7 @@ int Menu_Inventory(Inventory_Management Y_STORE[]) {
 }
 
 //2-1.재고 검색 메뉴
-int Menu_Inventory_Search(Inventory_Management Y_STORE[]) {
-    
+int Menu_Inventory_Search(Inventory_Management* Y_STORE) {
     int i;
     int unknown = 0;
     char Search_ITEM_name[NAME_SIZE] = { "\0" };
@@ -231,8 +239,8 @@ int Menu_Inventory_Search(Inventory_Management Y_STORE[]) {
 }
 
 //2-2.재고 입고 메뉴
-int Menu_Inventory_Add(Inventory_Management Y_STORE[]) {
-
+int Menu_Inventory_Add(Inventory_Management* Y_STORE) {
+    
     int empty_list = 0;
     char ITEM_name[ITEM_SIZE] = { "\0" };
 
@@ -260,8 +268,16 @@ int Menu_Inventory_Add(Inventory_Management Y_STORE[]) {
     else if (empty_list != -1) {
         Print_Errer("이미 추가된 재고입니다.");
 
+        Print_Simple("안내선");
+        Print_Simple("변경 전");
+        Print_Count_Inventory(Y_STORE, empty_list);
+
         // 수량 입력받기
         ADD_ITEM_quantity("추가할 수량을 입력하세요: ", Y_STORE, "양의 숫자를 입력하세요.", empty_list);
+
+        Print_Simple("안내선");
+        Print_Simple("변경 후");
+
         Print_Count_Inventory(Y_STORE, empty_list);
         return 1;
     }
@@ -272,8 +288,8 @@ int Menu_Inventory_Add(Inventory_Management Y_STORE[]) {
 }
 
 //2-3.재고 출고 메뉴
-int Menu_Inventory_Take(Inventory_Management Y_STORE[]) {
-
+int Menu_Inventory_Take(Inventory_Management* Y_STORE) {
+    
     int empty_list = 0;
     char ITEM_name[ITEM_SIZE] = { "\0" };
 
@@ -290,23 +306,36 @@ int Menu_Inventory_Take(Inventory_Management Y_STORE[]) {
     else{
         Print_Errer("이미 추가된 재고입니다.");
 
+        Print_Simple("안내선");
+        Print_Simple("변경 전");
+        Print_Count_Inventory(Y_STORE, empty_list);
+
         // 수량 입력받기
         TAKE_ITEM_quantity("출고할 수량을 입력하세요: ", Y_STORE, "보유한 수량보다 많을 수 없습니다.", empty_list);
-        
+
+        Print_Simple("안내선");
+        Print_Simple("변경 후");
+
         Print_Count_Inventory(Y_STORE, empty_list);
         return 1;
     }
 }
 
 //2-4 재고 삭제 메뉴
-int Menu_Inventory_Delete(Inventory_Management Y_STORE[]) {
-
+int Menu_Inventory_Delete(Inventory_Management* Y_STORE) {
+    
     int delete_list = 0;
     char ITEM_name[ITEM_SIZE] = { "\0" };
 
     GetValid_ITEM_Name(ITEM_name);
     delete_list = Check_Inventory_LIST(Y_STORE, ITEM_name, 0);
 
+    Print_Simple("안내선");
+    Print_Simple("삭제 전");
+    Print_Count_Inventory(Y_STORE, delete_list);
+
+    Print_Simple("안내선");
+    Print_Simple("삭제 후");
     if (DELETE_Inventory(Y_STORE, "없는 값입니다.", ITEM_name) == 1) {
         Print_Count_Inventory(Y_STORE, delete_list);
         return 1;
@@ -315,6 +344,7 @@ int Menu_Inventory_Delete(Inventory_Management Y_STORE[]) {
         return 0;
     }
 }
+
 
 //텍스트 출력 관련 함수------------------------------------------------------------------------------------------------------
 
@@ -352,6 +382,9 @@ void Print_Menu(char Text_list[]) {
         printf("5. 메인 메뉴\n");
         printf("____________________________________________\n");
     }
+    else {
+        printf("저장된 값 없음\n");
+    }
 }
 
 //에러 출력문 모음
@@ -385,6 +418,9 @@ void Print_Errer(char Text_list[]) {
         printf("\n\n보유한 수량보다 많을 수 없습니다.\n");
         printf("\n\n다시 입력해주세요.\n");
     }
+    else {
+        printf("저장된 값 없음\n");
+    }
     printf("\n____________________________________________\n\n");
 }
 
@@ -394,6 +430,21 @@ void Print_Simple(char Text_list[]) {
         printf("____________________________________________\n\n");
         return;
     }
+    else if (strcmp(Text_list, "변경 전") == 0) {
+        printf("[변경 전]\n");
+    }
+    else if (strcmp(Text_list, "변경 후") == 0) {
+        printf("[변경 후]\n");
+    }
+    else if (strcmp(Text_list, "삭제 전") == 0) {
+        printf("[삭제 전]\n");
+    }
+    else if (strcmp(Text_list, "삭제 후") == 0) {
+        printf("[삭제 후]\n");
+    }
+    else {
+        printf("저장된 값 없음\n");
+    }
 }
 
 
@@ -402,7 +453,7 @@ void Print_Simple(char Text_list[]) {
 
 
 //재고 유무 여부 채크 함수
-int Check_Inventory_LIST( Inventory_Management Y_STORE[], char checkITEM_name[], int Value) {
+int Check_Inventory_LIST(Inventory_Management* Y_STORE, char checkITEM_name[], int Value) {
     int i;
     //checkITEM_name이 있는지 확인하는 값
     if (Value == 0) {
@@ -424,8 +475,8 @@ int Check_Inventory_LIST( Inventory_Management Y_STORE[], char checkITEM_name[],
     }
 }
 
-//count의 재고를 출력하는 함수
-void Print_Count_Inventory( Inventory_Management* Y_STORE, int count) {
+//특정 재고 출력
+void Print_Count_Inventory(Inventory_Management* Y_STORE, int count) {
     Print_Simple("안내선");
     printf("[%d번 제품]\n", count);
     printf("제품명: %s\n", Y_STORE[count].ITEM_name);
@@ -435,8 +486,8 @@ void Print_Count_Inventory( Inventory_Management* Y_STORE, int count) {
     Print_Simple("안내선");
 }
 
-//재고 현황을 출력하는 함수
-void Print_Inventory_Management( Inventory_Management Y_STORE[],int sortType) {
+//모든 재고 출력
+void Print_Inventory_Management(Inventory_Management* Y_STORE,int sortType) {
     int i;
     if (sortType == FIRST) {
         printf("\n정렬방식 : 알파벳순 정렬\n\n");
@@ -456,7 +507,7 @@ void Print_Inventory_Management( Inventory_Management Y_STORE[],int sortType) {
     
 }
 
-//재고의 이름 입력받는 함수
+//재고의 이름을 입력받아 저장하는 함수
 int GetValid_ITEM_Name(char itemName[]) {
     while (1) {
         printf("재고의 이름을 입력해주세요 : ");
@@ -471,7 +522,7 @@ int GetValid_ITEM_Name(char itemName[]) {
     }
 }
 
-//재고 이름을 입력받은 뒤 영어 알파벳, 숫자 여부를 확인하는 함수
+//재고 이름 허용성 검사
 int Check_ITEM_name(char* str) {
 
     // 문자열 처음부터 널문자까지 반복해서 확인한다.
@@ -486,7 +537,7 @@ int Check_ITEM_name(char* str) {
     return 1; // 특수문자가 없으면 1 반환
 }
 
-//가격과 수량을 입력받아 유효한지 확인까지 수행하는 함수
+//가격과,수량 받아 검사하는 함수
 void SAVE_ITEM_priceORquantity(char* question, long* Input_value, char* errorMessage) {
     while (1) {
         printf("%s", question);
