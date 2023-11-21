@@ -213,8 +213,7 @@ int Menu_Inventory_Search(Inventory_Management* Y_STORE) {
     char Search_ITEM_name[NAME_SIZE] = { "\0" };
 
     if(Check_Inventory_LIST(Y_STORE,"",1) != -1) {
-        printf("재고의 이름을 입력해주세요 : ");
-        scanf("%29[^\n]s", Search_ITEM_name);
+        GetValid_ITEM_Name(Search_ITEM_name);
 
         for(i=0;i<ITEM_LIST;i++){
             if (strcmp(Y_STORE[i].ITEM_name, Search_ITEM_name) == 0) {
