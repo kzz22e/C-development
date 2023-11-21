@@ -604,7 +604,23 @@ int DELETE_Inventory(Inventory_Management* Y_STORE, char* errorMessage, char ITE
 
 //정렬 관련 함수------------------------------------------------------------------------------------------------------
 
-
+int compare_Inventory(const void* a, const void* b,char type[]){
+    
+    //구조체에서 ITEM_name을 비교 [이름순] - 오름차순
+    if (strcmp(type,"name") == 0){
+        // a와 b를 각각 구조체 포인터로 캐스팅한 후, ITEM_name를 비교하여 반환
+        //(struct Inventory_Management*) 구조체 포인터로 형변환
+        return strcmp(((Inventory_Management*)a)->ITEM_name, ((Inventory_Management*)b)->ITEM_name);
+    }
+    //구조체에서 ITEM_price을 비교 [상품가격순] - 오름차순
+    else if (strcmp(type,"price") == 0){
+        return strcmp(((Inventory_Management*)a)->ITEM_price, ((Inventory_Management*)b)->ITEM_price);
+    }
+    //구조체에서 ITEM_quantity을 비교 [상품수량순] - 오름차순
+    else if (strcmp(type,"quantity") == 0){
+        return ((Inventory_Management*)a)->ITEM_quantity - ((Inventory_Management*)b)->ITEM_quantity;
+    }
+}
 //구조체에서 ITEM_name을 비교하는 함수 [이름순] - 오름차순
 int compareStructs_name(const void* a, const void* b) {
     // a와 b를 각각 구조체 포인터로 캐스팅한 후, ITEM_name를 비교하여 반환
