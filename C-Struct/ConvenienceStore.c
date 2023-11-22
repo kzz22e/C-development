@@ -524,7 +524,9 @@ void Print_Inventory_Management(Inventory_Management* Y_STORE,int sortType) {
         printf("\n잘못된 값 입니다.\n\n");
     }
     for (i = 0; i < ITEM_LIST; i++){
-        Print_Count_Inventory(Y_STORE,i);
+        if(Y_STORE[i].ITEM_name != NULL && strlen(Y_STORE[i].ITEM_name) != 0){
+            Print_Count_Inventory(Y_STORE,i);
+        }
     }
     
 }
