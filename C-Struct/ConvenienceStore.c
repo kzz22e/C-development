@@ -326,23 +326,30 @@ int Menu_Inventory_Delete(Inventory_Management* Y_STORE) {
     int delete_list = 0;
     char ITEM_name[ITEM_SIZE] = { "\0" };
     
-    GetValid_ITEM_Name(ITEM_name);
-    delete_list = Check_Inventory_LIST(Y_STORE, ITEM_name, 0);
-
-    if(delete_list != -1){
-        Print_Simple("안내선");
-        Print_Simple("삭제 전");
-        Print_Count_Inventory(Y_STORE, delete_list);
+    if(Check_Inventory_LIST(Y_STORE,"",1) != -1){
     
-        Print_Simple("안내선");
-        Print_Simple("삭제 후");
+        GetValid_ITEM_Name(ITEM_name);
+        delete_list = Check_Inventory_LIST(Y_STORE, ITEM_name, 0);
+    
+        if(delete_list != -1){
+            Print_Simple("안내선");
+            Print_Simple("삭제 전");
+            Print_Count_Inventory(Y_STORE, delete_list);
+        
+            Print_Simple("안내선");
+            Print_Simple("삭제 후");
+        }
+        if (DELETE_Inventory(Y_STORE, "없는 값입니다.", ITEM_name) == 1) {
+            Print_Count_Inventory(Y_STORE, delete_list);
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
-    if (DELETE_Inventory(Y_STORE, "없는 값입니다.", ITEM_name) == 1) {
-        Print_Count_Inventory(Y_STORE, delete_list);
+    else{
+        Print_Errer("재고가 존재하지 않습니다.");
         return 1;
-    }
-    else {
-        return 0;
     }
 }
 
