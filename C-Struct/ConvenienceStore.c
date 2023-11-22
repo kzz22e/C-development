@@ -520,13 +520,13 @@ void Print_Count_Inventory(Inventory_Management* Y_STORE, int count) {
 void Print_Inventory_Management(Inventory_Management* Y_STORE,int sortType) {
     int i;
     if (sortType == FIRST) {
-        printf("\n정렬방식 : 알파벳순 정렬\n\n");
+        printf("\n정렬방식 : 알파벳순 정렬 | 총 %d개\n\n",count_list);
     }
     else if (sortType == SECOND) {
-        printf("\n정렬방식 : 가격순 정렬\n\n");
+        printf("\n정렬방식 : 가격순 정렬 | 총 %d개\n\n",count_list);
     }
     else if (sortType == THIRD) {
-        printf("\n정렬방식 : 수량순 정렬\n\n");
+        printf("\n정렬방식 : 수량순 정렬 | 총 %d개\n\n",count_list");
     }
     else {
         printf("\n잘못된 값 입니다.\n\n");
