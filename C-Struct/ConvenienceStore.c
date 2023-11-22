@@ -243,52 +243,45 @@ int Menu_Inventory_Add(Inventory_Management* Y_STORE) {
     int empty_list = 0;
     char ITEM_name[ITEM_SIZE] = { "\0" };
     
-    if(Check_Inventory_LIST(Y_STORE,"",1) != -1) {
+    GetValid_ITEM_Name(ITEM_name);
     
-        GetValid_ITEM_Name(ITEM_name);
+    empty_list = Check_Inventory_LIST(Y_STORE, ITEM_name, 0);
     
-        empty_list = Check_Inventory_LIST(Y_STORE, ITEM_name, 0);
+    if (empty_list == -1 && Check_Inventory_LIST(Y_STORE, "", 0) != -1) {
+        empty_list = Check_Inventory_LIST(Y_STORE, "", 0);
+        Print_Simple("안내선");
     
-        if (empty_list == -1 && Check_Inventory_LIST(Y_STORE, "", 0) != -1) {
-            empty_list = Check_Inventory_LIST(Y_STORE, "", 0);
-            Print_Simple("안내선");
+        // 입력받은 값 저장하기
+        strcpy(Y_STORE[empty_list].ITEM_name, ITEM_name);
     
-            // 입력받은 값 저장하기
-            strcpy(Y_STORE[empty_list].ITEM_name, ITEM_name);
+        // 가격 입력받기
+        SAVE_ITEM_priceORquantity("제품 가격을 입력하세요: ", &Y_STORE[empty_list].ITEM_price, "양의 숫자를 입력하세요.");
     
-            // 가격 입력받기
-            SAVE_ITEM_priceORquantity("제품 가격을 입력하세요: ", &Y_STORE[empty_list].ITEM_price, "양의 숫자를 입력하세요.");
+        // 수량 입력받기
+        SAVE_ITEM_priceORquantity("제품 수량을 입력하세요: ", &Y_STORE[empty_list].ITEM_quantity, "양의 숫자를 입력하세요.");
+        Print_Count_Inventory(Y_STORE, empty_list);
+        Print_Simple("안내선");
     
-            // 수량 입력받기
-            SAVE_ITEM_priceORquantity("제품 수량을 입력하세요: ", &Y_STORE[empty_list].ITEM_quantity, "양의 숫자를 입력하세요.");
-            Print_Count_Inventory(Y_STORE, empty_list);
-            Print_Simple("안내선");
-    
-            return 1;
-        }
-        else if (empty_list != -1) {
-            Print_Errer("이미 추가된 재고입니다.");
-    
-            Print_Simple("안내선");
-            Print_Simple("변경 전");
-            Print_Count_Inventory(Y_STORE, empty_list);
-    
-            // 수량 입력받기
-            ADD_ITEM_quantity("추가할 수량을 입력하세요: ", Y_STORE, "양의 숫자를 입력하세요.", empty_list);
-    
-            Print_Simple("안내선");
-            Print_Simple("변경 후");
-    
-            Print_Count_Inventory(Y_STORE, empty_list);
-            return 1;
-        }
-        else {
-            Print_Errer("더이상 저장할 공간이 없습니다");
-            return 1;
-        }
+        return 1;
     }
-    else{
-        Print_Errer("재고가 존재하지 않습니다.");
+    else if (empty_list != -1) {
+        Print_Errer("이미 추가된 재고입니다.");
+    
+        Print_Simple("안내선");
+        Print_Simple("변경 전");
+        Print_Count_Inventory(Y_STORE, empty_list);
+    
+        // 수량 입력받기
+        ADD_ITEM_quantity("추가할 수량을 입력하세요: ", Y_STORE, "양의 숫자를 입력하세요.", empty_list);
+    
+        Print_Simple("안내선");
+        Print_Simple("변경 후");
+    
+        Print_Count_Inventory(Y_STORE, empty_list);
+        return 1;
+    }
+    else {
+        Print_Errer("더이상 저장할 공간이 없습니다");
         return 1;
     }
 }
