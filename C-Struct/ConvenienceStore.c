@@ -627,15 +627,38 @@ int DELETE_Inventory(Inventory_Management* Y_STORE, char* errorMessage, char ITE
 
 //정렬 관련 함수------------------------------------------------------------------------------------------------------
 
+
 //구조체에서 ITEM_name을 비교하는 함수 [이름순] - 오름차순
 int compareStructs_name(const void* a, const void* b) {
-    // a와 b를 각각 구조체 포인터로 캐스팅한 후, ITEM_name를 비교하여 반환
-    //(struct Inventory_Management*) 구조체 포인터로 형변환
-    return strcmp(((Inventory_Management*)a)->ITEM_name, ((Inventory_Management*)b)->ITEM_name);
-}
+    // a와 b를 각각 구조체 포인터로 캐스팅한 후, ITEM_name을 가져오기
+    const char* nameA = ((Inventory_Management*)a)->ITEM_name;
+    const char* nameB = ((Inventory_Management*)b)->ITEM_name;
 
+    // ITEM_name이 없는 경우 해당 항목을 가장 뒤로 보내기
+    if ((nameA == NULL || strlen(nameA) == 0) && (nameB == NULL || strlen(nameB) == 0)) {
+        return 0; // 두 항목이 모두 ITEM_name이 없거나 비어있으면 순서를 유지
+    } else if (nameA == NULL || strlen(nameA) == 0) {
+        return 1; // a에만 ITEM_name이 없거나 비어있으면 a를 뒤로 보냄
+    } else if (nameB == NULL || strlen(nameB) == 0) {
+        return -1; // b에만 ITEM_name이 없거나 비어있으면 b를 뒤로 보냄
+    }
+
+    // ITEM_name이 모두 존재하고 비어있지 않은 경우 문자열 비교
+    return strcmp(nameA, nameB);
+}
 //구조체에서 ITEM_price을 비교하는 함수 [상품가격순] - 오름차순
 int compareStructs_price(const void* a, const void* b) {
+	const char* nameA = ((Inventory_Management*)a)->ITEM_name;
+    const char* nameB = ((Inventory_Management*)b)->ITEM_name;
+
+    // ITEM_name이 없는 경우 해당 항목을 가장 뒤로 보내기
+    if ((nameA == NULL || strlen(nameA) == 0) && (nameB == NULL || strlen(nameB) == 0)) {
+        return 0; // 두 항목이 모두 ITEM_name이 없거나 비어있으면 순서를 유지
+    } else if (nameA == NULL || strlen(nameA) == 0) {
+        return 1; // a에만 ITEM_name이 없거나 비어있으면 a를 뒤로 보냄
+    } else if (nameB == NULL || strlen(nameB) == 0) {
+        return -1; // b에만 ITEM_name이 없거나 비어있으면 b를 뒤로 보냄
+    }
     // a와 b를 각각 구조체 포인터로 캐스팅한 후, ITEM_price를 비교하여 반환
     //(struct Inventory_Management*) 구조체 포인터로 형변환
     return ((Inventory_Management*)a)->ITEM_price - ((Inventory_Management*)b)->ITEM_price;
@@ -643,9 +666,21 @@ int compareStructs_price(const void* a, const void* b) {
 
 //구조체에서 ITEM_quantity을 비교하는 함수 [상품수량순] - 오름차순
 int compareStructs_quantity(const void* a, const void* b) {
+	const char* nameA = ((Inventory_Management*)a)->ITEM_name;
+    const char* nameB = ((Inventory_Management*)b)->ITEM_name;
+
+    // ITEM_name이 없는 경우 해당 항목을 가장 뒤로 보내기
+    if ((nameA == NULL || strlen(nameA) == 0) && (nameB == NULL || strlen(nameB) == 0)) {
+        return 0; // 두 항목이 모두 ITEM_name이 없거나 비어있으면 순서를 유지
+    } else if (nameA == NULL || strlen(nameA) == 0) {
+        return 1; // a에만 ITEM_name이 없거나 비어있으면 a를 뒤로 보냄
+    } else if (nameB == NULL || strlen(nameB) == 0) {
+        return -1; // b에만 ITEM_name이 없거나 비어있으면 b를 뒤로 보냄
+    }
     // a와 b를 각각 구조체 포인터로 캐스팅한 후, ITEM_quantity를 비교하여 반환
     //(struct Inventory_Management*) 구조체 포인터로 형변환
     return ((Inventory_Management*)a)->ITEM_quantity - ((Inventory_Management*)b)->ITEM_quantity;
+
 }
 
 
