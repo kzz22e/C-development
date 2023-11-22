@@ -476,7 +476,7 @@ void Print_Simple(char Text_list[]) {
 
 //재고 유무 여부 채크 함수
 int Check_Inventory_LIST(Inventory_Management* Y_STORE, char checkITEM_name[], int Value) {
-    int i;
+    int i, count = 0;
     //checkITEM_name이 있는지 확인하는 값
     if (Value == 0) {
         for (i = 0; i < ITEM_LIST; i++) {
@@ -487,13 +487,21 @@ int Check_Inventory_LIST(Inventory_Management* Y_STORE, char checkITEM_name[], i
         return -1; // 그렇지 않으면 -1을 반환합니다.
     }
     //인덱스가 하나라도 존재한다면
-    else {
+    else if(Value == 1){
         for (i = 0; i < ITEM_LIST; i++) {
             if (strcmp(Y_STORE[i].ITEM_name, "\0") != 0) {
                 return 0; //"\0"이 아닌값이 하나라도 있으면
             }
         }
         return -1; // 그렇지 않으면 -1을 반환합니다.
+    }
+    else{
+        for (i = 0; i < ITEM_LIST; i++) {
+            if (strcmp(Y_STORE[i].ITEM_name, "\0") != 0) {
+                count++; //"\0"이 아닌값이 하나라도 있으면
+            }
+        }
+        return count;
     }
 }
 
