@@ -243,6 +243,8 @@ int Menu_Inventory_Add(Inventory_Management* Y_STORE) {
     int empty_list = 0;
     char ITEM_name[ITEM_SIZE] = { "\0" };
     
+    if(Check_Inventory_LIST(Y_STORE,"",0) != -1) {
+    
     GetValid_ITEM_Name(ITEM_name);
     
     empty_list = Check_Inventory_LIST(Y_STORE, ITEM_name, 0);
@@ -281,6 +283,11 @@ int Menu_Inventory_Add(Inventory_Management* Y_STORE) {
         return 1;
     }
     else {
+        Print_Errer("더이상 저장할 공간이 없습니다");
+        return 1;
+    }
+    }
+    else{
         Print_Errer("더이상 저장할 공간이 없습니다");
         return 1;
     }
