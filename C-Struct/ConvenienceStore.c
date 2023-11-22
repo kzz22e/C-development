@@ -519,14 +519,15 @@ void Print_Count_Inventory(Inventory_Management* Y_STORE, int count) {
 //모든 재고 출력
 void Print_Inventory_Management(Inventory_Management* Y_STORE,int sortType) {
     int i;
+    int count_list=Check_Inventory_LIST(Y_STORE,"",3);
     if (sortType == FIRST) {
-        printf("\n정렬방식 : 알파벳순 정렬 | 총 %d개\n\n",count_list);
+        printf("\n정렬방식 : 알파벳순 정렬 | 총 %d개(빈공긴 : %d개)\n\n",count_list,(ITEM_LIST-count_list));
     }
     else if (sortType == SECOND) {
-        printf("\n정렬방식 : 가격순 정렬 | 총 %d개\n\n",count_list);
+        printf("\n정렬방식 : 가격순 정렬 | 총 %d개(빈공긴 : %d개)\n\n",count_list,(ITEM_LIST-count_list));
     }
     else if (sortType == THIRD) {
-        printf("\n정렬방식 : 수량순 정렬 | 총 %d개\n\n",count_list");
+        printf("\n정렬방식 : 수량순 정렬 |  총 %d개(빈공긴 : %d개)\n\n",count_list,(ITEM_LIST-count_list));
     }
     else {
         printf("\n잘못된 값 입니다.\n\n");
