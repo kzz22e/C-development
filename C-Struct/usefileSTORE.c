@@ -46,10 +46,11 @@ void Print_Count_Inventory(Inventory_Management* Y_STORE, int repeat);          
 
 //검사하는 함수
 int Check_ITEM_name(char* str);                                                                     //재고 이름 허용성 검사
-int Check_Inventory_LIST(Inventory_Management* Y_STORE, char checkITEM_name[], int Value);         //재고 유무 여부 체크 함수
+int Check_Inventory_LIST(Inventory_Management* Y_STORE, char checkITEM_name[], int Value);          //재고 유무 여부 체크 함수
 int compareStructs_name(const void* a, const void* b);                                              //[상품이름순]
 int compareStructs_price(const void* a, const void* b);                                             //[상품가격순]
 int compareStructs_quantity(const void* a, const void* b);                                          //[상품수량순]
+void checkAndInitialize(char* str);                                                                 //"제품"과 "가격"이 포함되어있는지 확인
 
 //저장하는 함수
 int GetValid_ITEM_Name(char itemname[]);                                                                        //재고의 이름을 입력받아 저장하는 함수
@@ -58,7 +59,7 @@ void ADD_ITEM_quantity(char* question, Inventory_Management* Y_STORE, char* erro
 void TAKE_ITEM_quantity(char* question, Inventory_Management* Y_STORE, char* errorMessage, int index);          //출고 수량 입력받는 함수
 int DELETE_Inventory(Inventory_Management* Y_STORE, char* errorMessage, char ITEM_name[]);                      //재고를 삭제하는 함수
 void SaveInventory_File(Inventory_Management* Y_STORE);                                                         //파일을 생성하고 배열값을 파일에 저장
-void LoadInventory_File(Inventory_Management* Y_STORE);                                                         //파일을 불러와서 배열에 저장 
+void LoadInventory_File(Inventory_Management* Y_STORE);                                                         //파일을 불러와서 배열에 저장
 
 //================================================================================
 
@@ -453,14 +454,18 @@ void Print_Menu(char Text_list[]) {
     //메인메뉴
     if (strcmp(Text_list, "메인 메뉴") == 0) {
         printf("____________________________________________\n");
+        printf("\n[!]저장 및 종료로 종료시 파일이 저장됩니다\n");
+        printf("____________________________________________\n");
         printf("[메인 메뉴]\n");
         printf("1. 재고 현황\n");
         printf("2. 재고 관리\n");
-        printf("3. 종료\n");
+        printf("3. 저장 및 종료\n");
         printf("____________________________________________\n");
     }
     //1. 재고 현황 메뉴
     else if (strcmp(Text_list, "재고 현황") == 0) {
+        printf("____________________________________________\n");
+        printf("\n[!]저장 및 종료로 종료시 파일이 저장됩니다\n");
         printf("____________________________________________\n");
         printf("[정렬 방식 선택]\n");
         printf("1. 제품 알파벳순 정렬\n");
@@ -471,6 +476,8 @@ void Print_Menu(char Text_list[]) {
     }
     //2. 재고 관리 메뉴
     else if (strcmp(Text_list, "재고 관리") == 0) {
+        printf("____________________________________________\n");
+        printf("\n[!]저장 및 종료로 종료시 파일이 저장됩니다\n");
         printf("____________________________________________\n");
         printf("[재고 관리 선택]\n");
         printf("1. 재고 검색\n");
@@ -779,7 +786,7 @@ int compareStructs_quantity(const void* a, const void* b) {
 
 //-------------------------------------------------------------------------------------------------------------------
 
-
+//파일을 생성하고 배열값을 파일에 저장
 void SaveInventory_File(Inventory_Management* Y_STORE) {
     FILE* file = fopen("product.txt", "w"); // 텍스트 모드로 쓰기 위해 파일 열기
 
@@ -795,37 +802,42 @@ void SaveInventory_File(Inventory_Management* Y_STORE) {
             fprintf(file, "제품 가격: %ld원\n", Y_STORE[i].ITEM_price);
             fprintf(file, "제품 수량: %ld개\n", Y_STORE[i].ITEM_quantity);
             fprintf(file, "제품 총가격: %ld원\n", Y_STORE[i].ITEM_quantity * Y_STORE[i].ITEM_price);
-            
         }
-
         fclose(file);
     }
     else {
         printf("파일을 쓰기 위해 열 수 없습니다.\n");
     }
 }
+//파일을 불러와서 배열에 저장 
 void LoadInventory_File(Inventory_Management* Y_STORE) {
     FILE* file = fopen("product.txt", "r"); // 텍스트 모드로 읽기 위해 파일 열기
 
-    if (file != NULL) {
-        //첫줄 생략
-        fscanf(file, "%*[^\n]\n");
+     if (file != NULL) {
+        // 첫 줄 생략
+        while (fgetc(file) != '\n') {}
 
         for (int i = 0; i < ITEM_LIST; i++) {
+            // 제품 섹션까지 라인 건너 뛰기
             while (fgetc(file) != '\n'){}
-            fscanf(file, "____________________________________________\n");
+            
             fscanf(file, "[%*d번 제품]\n");
-            if (fscanf(file, "제품명: %s\n", Y_STORE[i].ITEM_name) != 1) {
-                printf("오류: 제품명을 읽을 수 없습니다.\n");
+            if (fscanf(file, "제품명: %[^\n]\n", Y_STORE[i].ITEM_name) != 1) {
+                Y_STORE[i].ITEM_name[0] = '\0';
             }
-            if (fscanf(file, "제품 가격: %ld원\n", &Y_STORE[i].ITEM_price) != 1) {
-                printf("오류: 제품 가격을 읽을 수 없습니다.\n");
+            else {
+                //만약 올바르게 읽어왔지만 원하는 값이 아닐경우
+                checkAndInitialize(Y_STORE[i].ITEM_name);
             }
-            if (fscanf(file, "제품 수량: %ld개\n", &Y_STORE[i].ITEM_quantity) != 1) {
-                printf("오류: 제품 수량을 읽을 수 없습니다.\n");
+            if (fscanf(file, "제품 가격: %ld원\n", &Y_STORE[i].ITEM_price) != 1 ){
+                //값이 0인경우
+                Y_STORE[i].ITEM_price = 0; // 기본값 설정
+            }
+            if (fscanf(file, "제품 수량: %ld개\n", &Y_STORE[i].ITEM_quantity) != 1 ){
+                //값이 0인경우
+                Y_STORE[i].ITEM_quantity = 0; // 기본값 설정
             }
             fscanf(file, "제품 총가격: %*ld원\n");
-            while (fgetc(file) != '\n') {}
         }
 
 
@@ -837,3 +849,13 @@ void LoadInventory_File(Inventory_Management* Y_STORE) {
         printf("종료시 새로운 파일이 생성되어 저장됩니다.\n");
     }
 }
+//"제품"과 "가격"이 포함되어있는지 확인
+void checkAndInitialize(char* str) {
+    // "제품"이 포함되어 있는지 확인
+    if (strstr(str, "제품") != NULL || strstr(str, "가격") != NULL) {
+        // "제품"이 포함되어 있으면 널 문자로 초기화
+        str[0] = '\0';
+    }
+}
+
+//-------------------------------------------------------------------------------------------------------------------
